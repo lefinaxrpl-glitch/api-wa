@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Data Siswa - JSON API</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            transition: 0.3s;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #1d4ed8
+            );
+
+            color: white;
+
+            padding: 25px 5%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #dbeafe;
+            font-size: 14px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        button,
+        a {
+            font-family: inherit;
+        }
+
+        .btn {
+            border: none;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-light {
+            background: white;
+            color: #1d4ed8;
+        }
+
+        .btn-dark {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-green {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: #15803d;
+        }
+
+        .btn-refresh {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        /* =========================
+           STATISTIK
+        ========================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            border: 1px solid #e2e8f0;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            box-shadow:
+                0 4px 15px rgba(15, 23, 42, 0.05);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+
+            background: #dbeafe;
+        }
+
+        .stat-info small {
+            display: block;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .stat-info strong {
+            font-size: 25px;
+        }
+
+        /* =========================
+           CONTENT CARD
+        ========================= */
+
+        .card {
+            background: white;
+
+            border-radius: 18px;
+
+            border: 1px solid #e2e8f0;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        .card-header {
+            padding: 22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+        }
+
+        .last-update {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        .filters {
+            padding: 18px 22px;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 230px;
+        }
+
+        .search-box input,
+        .filter-select {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            background: white;
+
+            color: #1e293b;
+        }
+
+        .search-box input:focus,
+        .filter-select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.1);
+        }
+
+        .filter-select {
+            width: 180px;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1050px;
+        }
+
+        th {
+            background: #f8fafc;
+
+            color: #475569;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 13px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        /* =========================
+           GENDER BADGE
+        ========================= */
+
+        .gender {
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .male {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .female {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        /* =========================
+           ACTION
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            gap: 7px;
+
+            white-space: nowrap;
+        }
+
+        .btn-edit {
+            background: #f59e0b;
+            color: white;
+
+            padding: 7px 10px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .btn-edit:hover {
+            background: #d97706;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+
+            padding: 7px 10px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #2563eb;
+
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #64748b;
+        }
+
+        .error {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #dc2626;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        body.dark {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark .stat-card,
+        body.dark .card {
+            background: #1e293b;
+
+            border-color: #334155;
+        }
+
+        body.dark .card-header,
+        body.dark .filters {
+            border-color: #334155;
+        }
+
+        body.dark th {
+            background: #172033;
+            color: #cbd5e1;
+            border-color: #334155;
+        }
+
+        body.dark td {
+            border-color: #334155;
+        }
+
+        body.dark tbody tr:hover {
+            background: #263449;
+        }
+
+        body.dark .search-box input,
+        body.dark .filter-select {
+            background: #0f172a;
+
+            color: #e2e8f0;
+
+            border-color: #475569;
+        }
+
+        body.dark .last-update,
+        body.dark .stat-info small {
+            color: #94a3b8;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div>
+
+        <h1>
+            🎓 Data Siswa
+        </h1>
+
+        <p>
+            Sistem pengelolaan data menggunakan JSON API
+        </p>
+
+    </div>
+
+
+    <div class="header-buttons">
+
+        <a
+            href="dashboard.php"
+            class="btn btn-dark">
+            🏠 Dashboard
+        </a>
+
+        <a
+            href="tambah.php"
+            class="btn btn-light">
+            ＋ Tambah Data
+        </a>
+
+        <button
+            onclick="toggleDarkMode()"
+            class="btn btn-dark"
+            id="darkButton">
+            🌙 Dark
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     CONTAINER
+========================= -->
+
+<div class="container">
+
+
+    <!-- =========================
+         STATISTIK
+    ========================= -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👨‍🎓
+            </div>
+
+            <div class="stat-info">
+
+                <small>
+                    Total Siswa
+                </small>
+
+                <strong id="total">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👦
+            </div>
+
+            <div class="stat-info">
+
+                <small>
+                    Laki-laki
+                </small>
+
+                <strong id="male">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👧
+            </div>
+
+            <div class="stat-info">
+
+                <small>
+                    Perempuan
+                </small>
+
+                <strong id="female">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         DATA CARD
+    ========================= -->
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    📋 Daftar Siswa
+                </h2>
+
+                <span
+                    class="last-update"
+                    id="lastUpdate">
+                    Memuat data...
+                </span>
+
+            </div>
+
+
+            <button
+                onclick="loadData()"
+                class="btn btn-refresh">
+
+                🔄 Refresh
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             FILTER
+        ========================= -->
+
+        <div class="filters">
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="🔎 Cari nama atau NISN..."
+                    oninput="filterData()"
+                >
+
+            </div>
+
+
+            <select
+                id="genderFilter"
+                class="filter-select"
+                onchange="filterData()">
+
+                <option value="">
+                    Semua Gender
+                </option>
+
+                <option value="MALE">
+                    👦 Laki-laki
+                </option>
+
+                <option value="FEMALE">
+                    👧 Perempuan
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+        <!-- =========================
+             TABLE
+        ========================= -->
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th width="70">
+                            ID
+                        </th>
+
+                        <th>
+                            NAMA
+                        </th>
+
+                        <th>
+                            NISN
+                        </th>
+
+                        <th>
+                            TTL
+                        </th>
+
+                        <th>
+                            GENDER
+                        </th>
+
+                        <th>
+                            EMAIL
+                        </th>
+
+                        <th>
+                            NO. HP
+                        </th>
+
+                        <th>
+                            ALAMAT
+                        </th>
+
+                        <th width="150">
+                            AKSI
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="hasil">
+
+                    <tr>
+
+                        <td
+                            colspan="9"
+                            class="loading">
+
+                            ⏳ Memuat data...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // Menyimpan seluruh data
+    let allData = [];
+
+
+    /* =========================
+       LOAD DATA API
+    ========================= */
+
+    function loadData() {
+
+        document.getElementById("hasil").innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="9"
+                    class="loading">
+
+                    ⏳ Mengambil data...
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        fetch("data_json.php")
+
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Gagal mengambil data"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(data => {
+
+            allData = data;
+
+            updateStatistics();
+
+            filterData();
+
+
+            const now = new Date();
+
+            document.getElementById(
+                "lastUpdate"
+            ).innerText =
+                "Terakhir diperbarui: " +
+                now.toLocaleTimeString("id-ID");
+
+        })
+
+        .catch(error => {
+
+            document.getElementById("hasil").innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="9"
+                        class="error">
+
+                        ❌ Gagal mengambil data JSON API.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            console.error(error);
+
+        });
+
+    }
+
+
+    /* =========================
+       STATISTIK
+    ========================= */
+
+    function updateStatistics() {
+
+        const total =
+            allData.length;
+
+        const male =
+            allData.filter(
+                item =>
+                    String(item.gender)
+                    .toUpperCase() === "MALE"
+            ).length;
+
+        const female =
+            allData.filter(
+                item =>
+                    String(item.gender)
+                    .toUpperCase() === "FEMALE"
+            ).length;
+
+
+        document.getElementById(
+            "total"
+        ).innerText = total;
+
+
+        document.getElementById(
+            "male"
+        ).innerText = male;
+
+
+        document.getElementById(
+            "female"
+        ).innerText = female;
+
+    }
+
+
+    /* =========================
+       FILTER + SEARCH
+    ========================= */
+
+    function filterData() {
+
+        const keyword =
+            document
+                .getElementById("search")
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const gender =
+            document
+                .getElementById("genderFilter")
+                .value;
+
+
+        const filtered =
+            allData.filter(item => {
+
+                const name =
+                    String(
+                        item.name || ""
+                    ).toLowerCase();
+
+                const nisn =
+                    String(
+                        item.nisn || ""
+                    ).toLowerCase();
+
+
+                const matchSearch =
+                    name.includes(keyword) ||
+                    nisn.includes(keyword);
+
+
+                const matchGender =
+                    gender === "" ||
+                    String(item.gender)
+                        .toUpperCase() === gender;
+
+
+                return (
+                    matchSearch &&
+                    matchGender
+                );
+
+            });
+
+
+        renderTable(filtered);
+
+    }
+
+
+    /* =========================
+       TAMPILKAN DATA
+    ========================= */
+
+    function renderTable(data) {
+
+        const tbody =
+            document.getElementById("hasil");
+
+
+        if (data.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="9"
+                        class="empty">
+
+                        🔍 Data tidak ditemukan.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        data.forEach(item => {
+
+            const gender =
+                String(
+                    item.gender || ""
+                ).toUpperCase();
+
+
+            const genderClass =
+                gender === "MALE"
+                    ? "male"
+                    : "female";
+
+
+            const genderText =
+                gender === "MALE"
+                    ? "👦 Laki-laki"
+                    : "👧 Perempuan";
+
+
+            html += `
+
+                <tr>
+
+                    <td class="center">
+                        ${escapeHTML(item.id)}
+                    </td>
+
+
+                    <td>
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.nisn)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.ttl)}
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="gender ${genderClass}">
+
+                            ${genderText}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.email)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.phone || "-")}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.address)}
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                href="edit.php?id=${encodeURIComponent(item.id)}"
+                                class="btn-edit">
+
+                                ✏️ Edit
+
+                            </a>
+
+
+                            <a
+                                href="hapus.php?id=${encodeURIComponent(item.id)}"
+                                class="btn-delete"
+                                onclick="return confirmDelete('${escapeJS(item.name)}')">
+
+                                🗑️ Hapus
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+
+        tbody.innerHTML = html;
+
+    }
+
+
+    /* =========================
+       KONFIRMASI HAPUS
+    ========================= */
+
+    function confirmDelete(name) {
+
+        return confirm(
+            '⚠️ PERINGATAN\\n\\n' +
+            'Yakin ingin menghapus data "' +
+            name +
+            '"?\\n\\n' +
+            'Data yang dihapus tidak dapat dikembalikan.'
+        );
+
+    }
+
+
+    /* =========================
+       KEAMANAN HTML
+    ========================= */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeJS(value) {
+
+        return String(value ?? "")
+            .replace(/\\/g, "\\\\")
+            .replace(/'/g, "\\'")
+            .replace(/"/g, '\\"')
+            .replace(/\n/g, "\\n")
+            .replace(/\r/g, "\\r");
+
+    }
+
+
+    /* =========================
+       DARK MODE
+    ========================= */
+
+    function toggleDarkMode() {
+
+        document.body.classList.toggle("dark");
+
+
+        const dark =
+            document.body.classList.contains("dark");
+
+
+        document.getElementById(
+            "darkButton"
+        ).innerText =
+            dark
+                ? "☀️ Light"
+                : "🌙 Dark";
+
+
+        localStorage.setItem(
+            "darkMode",
+            dark
+                ? "on"
+                : "off"
+        );
+
+    }
+
+
+    /* =========================
+       LOAD DARK MODE
+    ========================= */
+
+    if (
+        localStorage.getItem("darkMode")
+        === "on"
+    ) {
+
+        document.body.classList.add("dark");
+
+        document.getElementById(
+            "darkButton"
+        ).innerText =
+            "☀️ Light";
+
+    }
+
+
+    /* =========================
+       JALANKAN SAAT HALAMAN DIBUKA
+    ========================= */
+
+    loadData();
+
+</script>
+
+
+</body>
+
+</html>

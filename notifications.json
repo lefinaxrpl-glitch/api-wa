@@ -1,0 +1,134 @@
+[
+    {
+        "id": "1790836378984",
+        "type": "add",
+        "message": "Data siswa \"Lefina Restiana Wahyu Saputri\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 08:32:58"
+    },
+    {
+        "id": "1790836066930",
+        "type": "add",
+        "message": "Data siswa \"tamtoy\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 08:27:46"
+    },
+    {
+        "id": "1790834523784",
+        "type": "login",
+        "message": "Administrator berhasil login sebagai ADMIN",
+        "time": "01-10-2026 08:02:03"
+    },
+    {
+        "id": "1790834510422",
+        "type": "logout",
+        "message": "Administrator telah logout dari sistem",
+        "time": "01-10-2026 08:01:50"
+    },
+    {
+        "id": "1790834462287",
+        "type": "login",
+        "message": "Administrator berhasil login sebagai ADMIN",
+        "time": "01-10-2026 08:01:02"
+    },
+    {
+        "id": "1790834447133",
+        "type": "logout",
+        "message": "Administrator telah logout dari sistem",
+        "time": "01-10-2026 08:00:47"
+    },
+    {
+        "id": "1790834365398",
+        "type": "login",
+        "message": "Administrator berhasil login sebagai ADMIN",
+        "time": "01-10-2026 07:59:25"
+    },
+    {
+        "id": "1790818588802",
+        "type": "login",
+        "message": "Administrator berhasil login sebagai ADMIN",
+        "time": "01-10-2026 03:36:28"
+    },
+    {
+        "id": "1790818585649",
+        "type": "logout",
+        "message": "Administrator telah logout dari sistem",
+        "time": "01-10-2026 03:36:25"
+    },
+    {
+        "id": "1790817586405",
+        "type": "update",
+        "message": "Data siswa \"dek toyyyy\" berhasil diperbarui menjadi \"onty toyyyy\" oleh Administrator",
+        "time": "01-10-2026 03:19:46"
+    },
+    {
+        "id": "1790817320598",
+        "type": "add",
+        "message": "Data siswa \"Lefina Restiana Wahyu Saputri\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 03:15:20"
+    },
+    {
+        "id": "1790817289385",
+        "type": "add",
+        "message": "Data siswa \"dek toyyyy\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 03:14:49"
+    },
+    {
+        "id": "1790817257861",
+        "type": "add",
+        "message": "Data siswa \"DEK LEAAAA\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 03:14:17"
+    },
+    {
+        "id": "1790817234494",
+        "type": "add",
+        "message": "Data siswa \"fddddddddd\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 03:13:54"
+    },
+    {
+        "id": "1790817057564",
+        "type": "add",
+        "message": "Data siswa \"dek rinn\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 03:10:57"
+    },
+    {
+        "id": "1790816787470",
+        "type": "login",
+        "message": "Administrator berhasil login sebagai ADMIN",
+        "time": "01-10-2026 03:06:27"
+    },
+    {
+        "id": "1790816783898",
+        "type": "logout",
+        "message": "User Demo telah logout dari sistem",
+        "time": "01-10-2026 03:06:23"
+    },
+    {
+        "id": "1790816775675",
+        "type": "login",
+        "message": "User Demo berhasil login sebagai USER",
+        "time": "01-10-2026 03:06:15"
+    },
+    {
+        "id": "1790816763127",
+        "type": "logout",
+        "message": "Administrator telah logout dari sistem",
+        "time": "01-10-2026 03:06:03"
+    },
+    {
+        "id": "1790816587220",
+        "type": "delete",
+        "message": "Data siswa \"Leanne Graham\" berhasil dihapus oleh Administrator",
+        "time": "01-10-2026 03:03:07"
+    },
+    {
+        "id": "1790816565441",
+        "type": "add",
+        "message": "Data siswa \"nur\" berhasil ditambahkan oleh Administrator",
+        "time": "01-10-2026 03:02:45"
+    },
+    {
+        "id": "1790816451624",
+        "type": "login",
+        "message": "Administrator berhasil login sebagai ADMIN",
+        "time": "01-10-2026 03:00:51"
+    }
+]
